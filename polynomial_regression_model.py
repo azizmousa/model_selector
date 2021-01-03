@@ -1,4 +1,5 @@
 from regression_model import RegressionModel
+import numpy as np
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
 from regression_evaluator import RegressionEvaluator
@@ -10,9 +11,8 @@ class PolynomialRegressionModel(RegressionModel):
     _degreed_model = {}
 
     def __init__(self, x_train=None, y_train=None, x_validation=None, y_validation=None, model=None, degree_range=None):
-        if degree_range is None:
-            degree_range = []
-        self._degree_range = degree_range
+
+        self.set_degree_range(degree_range)
         self._degreed_model = {}
         if model is None:
             model = LinearRegression()
@@ -48,3 +48,16 @@ class PolynomialRegressionModel(RegressionModel):
     # get the name of the model as string
     def to_string(self):
         return type(self._model)
+
+    def get_degree_range(self):
+        return self._degree_range
+
+    def get_degreed_models(self):
+        return self._degreed_model
+
+    def set_degree_range(self, degree_range):
+        if degree_range is None:
+            degree_range = []
+        elif not isinstance(degree_range, np.ndarray):
+            raise TypeError("degree_range should be 1d array")
+        self._degree_range = degree_range.flatten()
