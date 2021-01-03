@@ -10,7 +10,7 @@ from random_forest_regression_model import RandomForestRegressionModel
 
 class RegressionSelector:
     __models = []
-    __adjust_r_square_arr = []
+    __evaluation_arr = []
     __x_train = None
     __y_train = None
     __x_validation = None
@@ -20,7 +20,7 @@ class RegressionSelector:
                  linear_model=None, polynomial_model=None, svr_model=None, random_forest_model=None,
                  regression_tree_model=None):
         self.__models = []
-        self.__adjust_r_square_arr = []
+        self.__evaluation_arr = []
         self.__x_train = x_train
         self.__x_validation = x_validation
         self.__y_train = y_train
@@ -85,3 +85,11 @@ class RegressionSelector:
 
     def get_y_validationset(self):
         return self.__y_validation
+
+    def start_evaluation(self):
+        for model in self.__models:
+            self.__evaluation_arr.append(model.evaluate_model())
+
+    def get_evaluation_array(self):
+        return self.__evaluation_arr
+    
