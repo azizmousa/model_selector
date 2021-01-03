@@ -1,4 +1,5 @@
 import numpy as np
+from regression_model import RegressionModel
 from linear_regression_model import LinearRegressionModel
 from polynomial_regression_model import PolynomialRegressionModel
 from sklearn.preprocessing import StandardScaler
@@ -9,11 +10,13 @@ from random_forest_regression_model import RandomForestRegressionModel
 
 class RegressionSelector:
     __models = []
+    __adjust_r_square_arr = []
 
     def __init__(self, x_train, y_train, x_validation=None, y_validation=None,
                  linear_model=None, polynomial_model=None, svr_model=None, random_forest_model=None,
                  regression_tree_model=None):
         self.__models = []
+        self.__adjust_r_square_arr = []
 
         if linear_model is None:
             linear_model = LinearRegressionModel(x_train=x_train, y_train=y_train,
@@ -37,36 +40,16 @@ class RegressionSelector:
         if regression_tree_model is None:
             regression_tree_model = RegressionTreeModel(x_train=x_train, y_train=y_train, x_validation=x_validation,
                                                         y_validation=y_validation)
-        self.set_linear_model(linear_model)
-        self.set_polynomial_model(polynomial_model)
-        self.set_svr_model(svr_model)
-        self.set_random_forest_model(random_forest_model)
-        self.set_regression_tree_model(regression_tree_model)
+        self.set_model(linear_model)
+        self.set_model(polynomial_model)
+        self.set_model(svr_model)
+        self.set_model(random_forest_model)
+        self.set_model(regression_tree_model)
 
     def get_all_models(self):
         return self.__models
 
-    def set_linear_model(self, model):
-        if not isinstance(model, LinearRegressionModel):
-            raise TypeError("model should be type of LinearRegression")
-        self.__models.append(model)
-
-    def set_polynomial_model(self, model):
-        if not isinstance(model, PolynomialRegressionModel):
-            raise TypeError("model should be type of LinearRegression")
-        self.__models.append(model)
-
-    def set_svr_model(self, model):
-        if not isinstance(model, SupportVectorRegression):
-            raise TypeError("model should be type of SVR")
-        self.__models.append(model)
-
-    def set_random_forest_model(self, model):
-        if not isinstance(model, RandomForestRegressionModel):
-            raise TypeError("model should be type of RandomForestRegressor")
-        self.__models.append(model)
-
-    def set_regression_tree_model(self, model):
-        if not isinstance(model, RegressionTreeModel):
-            raise TypeError("model should be type of DecisionTreeRegressor")
+    def set_model(self, model):
+        if not isinstance(model, RegressionModel):
+            raise TypeError("model should be type of RegressionModel")
         self.__models.append(model)
