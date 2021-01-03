@@ -11,5 +11,5 @@ class RegressionEvaluator:
         r_squar = 1 - (float(ss_resduals)/ss_total)
         n = len(y_validation)
         p = len(x_validation[0])
-        adjust_r_squar = 1 - (1 - r_squar)*((n-1) / (n-p-1))
+        adjust_r_squar = 1 - (1 - r_squar)*((n-1) / np.abs(n-p-1))
         return adjust_r_squar
