@@ -1,6 +1,9 @@
 from regression_model import RegressionModel
 from sklearn.svm import SVR
 from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MaxAbsScaler
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import RobustScaler
 from regression_evaluator import RegressionEvaluator
 
 
@@ -52,3 +55,23 @@ class SupportVectorRegression(RegressionModel):
     # get the name of the model as string
     def to_string(self):
         return type(self._model)
+
+    def get_x_scaler(self):
+        return self._x_scaler
+
+    def get_y_scaler(self):
+        return self._y_scaler
+
+    def set_x_scaler(self, scaler):
+        if scaler is not StandardScaler or scaler is not MaxAbsScaler or scaler is not MinMaxScaler \
+                or scaler is not RobustScaler:
+            raise TypeError("type of scaler should be one of the scaler classes only")
+
+        self._x_scaler = scaler
+
+    def set_y_scaler(self, scaler):
+        if scaler is not StandardScaler or scaler is not MaxAbsScaler or scaler is not MinMaxScaler \
+                or scaler is not RobustScaler:
+            raise TypeError("type of scaler should be one of the scaler classes only")
+
+        self._y_scaler = scaler
