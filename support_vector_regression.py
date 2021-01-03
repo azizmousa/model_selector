@@ -15,8 +15,8 @@ class SupportVectorRegression(RegressionModel):
     def __init__(self, x_train=None, y_train=None, x_validation=None, y_validation=None, model=None, x_scaler=None,
                  y_scaler=None):
 
-        self._x_scaler = x_scaler
-        self._y_scaler = y_scaler
+        self.set_x_scaler(x_scaler)
+        self.set_y_scaler(y_scaler)
 
         if model is None:
             model = SVR(kernel="rbf")
