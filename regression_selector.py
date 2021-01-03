@@ -88,8 +88,9 @@ class RegressionSelector:
 
     def start_evaluation(self):
         for model in self.__models:
+            model.create_model()
             self.__evaluation_arr.append(model.evaluate_model())
 
     def get_evaluation_array(self):
         return self.__evaluation_arr
-    
+
