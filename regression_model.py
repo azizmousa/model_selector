@@ -1,3 +1,5 @@
+from regression_evaluator import RegressionEvaluator
+
 
 class RegressionModel:
     _x_train = None
@@ -18,7 +20,13 @@ class RegressionModel:
         pass
 
     def evaluate_model(self):
-        pass
+        if self._x_validation is None:
+            self._x_validation = self._x_train
+        if self._y_validation is None:
+            self._y_validation = self._y_train
+        adj_rs = RegressionEvaluator.adjust_r_squar_error(model=self._model, x_validation=self._x_validation,
+                                                          y_validation=self._y_validation)
+        return adj_rs
 
     def get_model(self):
         return self._model
