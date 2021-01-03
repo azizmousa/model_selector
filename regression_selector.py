@@ -89,6 +89,7 @@ class RegressionSelector:
     def start_evaluation(self):
         for model in self.__models:
             model.create_model()
+            print(f"evaluating {type(model)} model .....")
             if isinstance(model, PolynomialRegressionModel):
                 self.__evaluation_arr.append(list(model.evaluate_model()))
             else:
@@ -100,8 +101,8 @@ class RegressionSelector:
     def get_best_fit_model(self):
         mx_model = None
         i = 0
+        mx = 0
         for ev in self.__evaluation_arr:
-            mx = 0
             if isinstance(ev, list):
                 ev = list(ev)
                 pmx = np.nan
@@ -114,7 +115,8 @@ class RegressionSelector:
                     mx_model = self.__models[i].get_degreed_models().values()[ev.index(mx)]
             else:
                 if ev > mx:
+                    mx = ev
                     mx_model = self.__models[i]
             i += 1
-
-        return mx_model
+        ret_val = (mx_model, mx)
+        return ret_val
