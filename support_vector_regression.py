@@ -63,15 +63,15 @@ class SupportVectorRegression(RegressionModel):
         return self._y_scaler
 
     def set_x_scaler(self, scaler):
-        if scaler is not StandardScaler or scaler is not MaxAbsScaler or scaler is not MinMaxScaler \
-                or scaler is not RobustScaler:
+        if not (isinstance(scaler, StandardScaler) or isinstance(scaler, MaxAbsScaler)
+                or isinstance(scaler, MinMaxScaler) or isinstance(scaler, RobustScaler)):
             raise TypeError("type of scaler should be one of the scaler classes only")
 
         self._x_scaler = scaler
 
     def set_y_scaler(self, scaler):
-        if scaler is not StandardScaler or scaler is not MaxAbsScaler or scaler is not MinMaxScaler \
-                or scaler is not RobustScaler:
+        if not (isinstance(scaler, StandardScaler) or isinstance(scaler, MaxAbsScaler)
+                or isinstance(scaler, MinMaxScaler) or isinstance(scaler, RobustScaler)):
             raise TypeError("type of scaler should be one of the scaler classes only")
 
         self._y_scaler = scaler
