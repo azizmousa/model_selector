@@ -1,6 +1,7 @@
 from regression_model import RegressionModel
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
+from regression_evaluator import RegressionEvaluator
 
 
 class PolynomialRegressionModel(RegressionModel):
@@ -31,6 +32,18 @@ class PolynomialRegressionModel(RegressionModel):
                 model.fit(x_poly_train, self._y_train)
                 self._degreed_model[degree] = model
                 print(f"Polynomial Regression Model of Degree [{degree}] Training is Finished >>")
+
+    def evaluate_model(self):
+        if self._x_validation is None:
+            self._x_validation = self._x_train
+        if self._y_validation is None:
+            self._y_validation = self._y_train
+        for degree in self._degreed_model:
+            poly = PolynomialFeatures(degree=degree)
+            adj_rs = RegressionEvaluator.adjust_r_squar_error(model=self._degreed_model[degree],
+                                                              x_validation=poly.fit_transform(self._x_validation),
+                                                              y_validation=self._y_validation)
+            yield adj_rs
 
     # get the name of the model as string
     def to_string(self):
