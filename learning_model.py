@@ -1,4 +1,4 @@
-from model_selector.regression.regression_evaluator import RegressionEvaluator
+from model_selector.model_evaluator import ModelEvaluator
 
 
 class LearningModel:
@@ -34,9 +34,9 @@ class LearningModel:
             self._x_validation = self._x_train
         if self._y_validation is None:
             self._y_validation = self._y_train
-        adj_rs = RegressionEvaluator.adjust_r_squar_error(model=self._model, x_validation=self._x_validation,
-                                                          y_validation=self._y_validation)
-        mae = RegressionEvaluator.get_mean_absolute_error(self._model, self._x_validation, self._y_validation)
+        adj_rs = ModelEvaluator.adjust_r_squar_error(model=self._model, x_validation=self._x_validation,
+                                                     y_validation=self._y_validation)
+        mae = ModelEvaluator.get_mean_absolute_error(self._model, self._x_validation, self._y_validation)
         return adj_rs, mae
 
     def get_model(self):

@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.metrics import mean_absolute_error
 
 
-class RegressionEvaluator:
+class ModelEvaluator:
 
     @staticmethod
     def adjust_r_squar_error(model, x_validation, y_validation):
