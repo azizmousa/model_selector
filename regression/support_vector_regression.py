@@ -43,13 +43,12 @@ class SupportVectorRegression(RegressionModel):
         x_scaled = self._x_validation
         y_scaled = self._y_validation
         if self._x_scaler is not None:
-            x_scaled = self._x_scaler.fit_transform(x_scaled)
-        if self._y_scaler is not None:
-            y_scaled = self._y_scaler.fit_transform(y_scaled)
+            self._x_validation = self._x_scaler.fit_transform(x_scaled)
 
-        adj_rs = RegressionEvaluator.adjust_r_squar_error(model=self._model, x_validation=x_scaled,
-                                                          y_validation=y_scaled)
-        return adj_rs
+        if self._y_scaler is not None:
+            self._y_validation = self._y_scaler.fit_transform(y_scaled)
+
+        return super().evaluate_model()
 
     # get the name of the model as string
     def to_string(self):

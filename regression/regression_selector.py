@@ -101,20 +101,20 @@ class RegressionSelector:
     def get_best_fit_model(self):
         mx_model = None
         i = 0
-        mx = 0
+        mx = (0, 0)
         for ev in self.__evaluation_arr:
             if isinstance(ev, list):
                 ev = list(ev)
-                pmx = np.nan
+                pmx = (np.nan, np.nan)
                 for pev in ev:
-                    if pev > pmx:
+                    if pev[0] > pmx[0]:
                         pmx = pev
 
-                if pmx > mx:
+                if pmx[0] > mx[0]:
                     mx = pmx
                     mx_model = self.__models[i].get_degreed_models().values()[ev.index(mx)]
             else:
-                if ev > mx:
+                if ev[0] > mx[0]:
                     mx = ev
                     mx_model = self.__models[i]
             i += 1
