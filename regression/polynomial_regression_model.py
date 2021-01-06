@@ -1,8 +1,8 @@
-from regression_model import RegressionModel
+from model_selector.regression.regression_model import RegressionModel
 import numpy as np
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
-from regression_evaluator import RegressionEvaluator
+from model_selector.regression.regression_evaluator import RegressionEvaluator
 
 
 class PolynomialRegressionModel(RegressionModel):

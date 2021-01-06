@@ -1,4 +1,4 @@
-from regression_model import RegressionModel
+from model_selector.regression.regression_model import RegressionModel
 from sklearn.ensemble import RandomForestRegressor
 
 

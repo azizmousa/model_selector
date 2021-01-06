@@ -1,4 +1,4 @@
-from regression_evaluator import RegressionEvaluator
+from model_selector.regression.regression_evaluator import RegressionEvaluator
 
 
 class RegressionModel:

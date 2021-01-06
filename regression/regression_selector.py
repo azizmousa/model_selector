@@ -1,11 +1,11 @@
 import numpy as np
-from regression_model import RegressionModel
-from linear_regression_model import LinearRegressionModel
-from polynomial_regression_model import PolynomialRegressionModel
+from model_selector.regression.regression_model import RegressionModel
+from model_selector.regression.linear_regression_model import LinearRegressionModel
+from model_selector.regression.polynomial_regression_model import PolynomialRegressionModel
 from sklearn.preprocessing import StandardScaler
-from support_vector_regression import SupportVectorRegression
-from regression_tree_model import RegressionTreeModel
-from random_forest_regression_model import RandomForestRegressionModel
+from model_selector.regression.support_vector_regression import SupportVectorRegression
+from model_selector.regression.regression_tree_model import RegressionTreeModel
+from model_selector.regression.random_forest_regression_model import RandomForestRegressionModel
 
 
 class RegressionSelector:
