@@ -1,8 +1,8 @@
-from model_selector.regression.regression_model import RegressionModel
+from model_selector.learning_model import LearningModel
 from sklearn.ensemble import RandomForestRegressor
 
 
-class RandomForestRegressionModel(RegressionModel):
+class RandomForestRegressionModel(LearningModel):
 
     def __init__(self, x_train=None, y_train=None, x_validation=None, y_validation=None, model=None, n_estimators=1,
                  random_state=0):

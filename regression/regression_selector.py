@@ -1,5 +1,5 @@
 import numpy as np
-from model_selector.regression.regression_model import RegressionModel
+from model_selector.learning_model import LearningModel
 from model_selector.regression.linear_regression_model import LinearRegressionModel
 from model_selector.regression.polynomial_regression_model import PolynomialRegressionModel
 from sklearn.preprocessing import StandardScaler
@@ -58,8 +58,8 @@ class RegressionSelector:
         return self.__models
 
     def set_model(self, model):
-        if not isinstance(model, RegressionModel):
-            raise TypeError("model should be type of RegressionModel")
+        if not isinstance(model, LearningModel):
+            raise TypeError("model should be type of LearningModel")
         self.__models.append(model)
 
     def set_x_trainset(self, x_train):

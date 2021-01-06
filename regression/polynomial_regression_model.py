@@ -1,14 +1,13 @@
-from model_selector.regression.regression_model import RegressionModel
+from model_selector.learning_model import LearningModel
 import numpy as np
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
-from model_selector.regression.regression_evaluator import RegressionEvaluator
 
 
-class PolynomialRegressionModel(RegressionModel):
+class PolynomialRegressionModel(LearningModel):
 
     def __init__(self, x_train=None, y_train=None, x_validation=None, y_validation=None, model=None, degree_range=None):
-
+        self._degree_range = None
         self.set_degree_range(degree_range)
         self._degreed_model = {}
         self._x_validation_zero = x_validation

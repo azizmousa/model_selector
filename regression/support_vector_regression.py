@@ -1,13 +1,12 @@
-from model_selector.regression.regression_model import RegressionModel
+from model_selector.learning_model import LearningModel
 from sklearn.svm import SVR
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MaxAbsScaler
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import RobustScaler
-from model_selector.regression.regression_evaluator import RegressionEvaluator
 
 
-class SupportVectorRegression(RegressionModel):
+class SupportVectorRegression(LearningModel):
     _x_scaler = None
     _y_scaler = None
 

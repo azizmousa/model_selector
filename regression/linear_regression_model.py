@@ -1,8 +1,8 @@
-from model_selector.regression.regression_model import RegressionModel
+from model_selector.learning_model import LearningModel
 from sklearn.linear_model import LinearRegression
 
 
-class LinearRegressionModel(RegressionModel):
+class LinearRegressionModel(LearningModel):
 
     def __init__(self, x_train=None, y_train=None, x_validation=None, y_validation=None, model=None):
         if model is None:

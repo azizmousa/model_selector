@@ -1,7 +1,7 @@
 from model_selector.regression.regression_evaluator import RegressionEvaluator
 
 
-class RegressionModel:
+class LearningModel:
 
     def __init__(self, x_train=None, y_train=None, x_validation=None, y_validation=None, model=None):
         self._x_train = x_train
@@ -17,7 +17,7 @@ class RegressionModel:
     def evaluate_model(self):
         """evaluate_model method to evalutate the model with many evaluation methods.
 
-        model = RegressionModel()
+        model = LearningModel()
         adj_rs, mae = model.evaluate_model()
 
         :parameter
