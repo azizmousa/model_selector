@@ -6,6 +6,9 @@ class KNearestNeighborsModel(LearningModel):
 
     def __init__(self, x_train=None, y_train=None, x_validation=None, y_validation=None, model=None, n_neighbors=5,
                  metric='minkowski', p=2):
+        self._n_neighbors = n_neighbors
+        self._metric = metric
+        self._p = p
         if model is None:
             model = KNeighborsClassifier(n_neighbors=n_neighbors, metric=metric, p=p)
         super().__init__(x_train, y_train, x_validation, y_validation, model)
