@@ -6,11 +6,11 @@ from sklearn.preprocessing import StandardScaler
 from model_selector.regression.support_vector_regression import SupportVectorRegression
 from model_selector.regression.regression_tree_model import RegressionTreeModel
 from model_selector.regression.random_forest_regression_model import RandomForestRegressionModel
+from model_selector.model_evaluator import ModelEvaluator
 
 
 class RegressionSelector:
-    __models = []
-    __evaluation_arr = []
+    __models_evaluation = {}
     __x_train = None
     __y_train = None
     __x_validation = None
@@ -19,8 +19,7 @@ class RegressionSelector:
     def __init__(self, x_train, y_train, x_validation=None, y_validation=None,
                  linear_model=None, polynomial_model=None, svr_model=None, random_forest_model=None,
                  regression_tree_model=None):
-        self.__models = []
-        self.__evaluation_arr = []
+        self.__models_evaluation = {}
         self.__x_train = x_train
         self.__x_validation = x_validation
         self.__y_train = y_train
@@ -55,16 +54,15 @@ class RegressionSelector:
         self.set_model(regression_tree_model)
 
     def get_all_models(self):
-        return self.__models
+        return self.__models_evaluation.keys()
 
     def set_model(self, model):
         if not isinstance(model, LearningModel):
             raise TypeError("model should be type of LearningModel")
         if isinstance(model, PolynomialRegressionModel):
-            for mdl in model.get_degreed_models():
-                self.__models.append(mdl)
+            self.__models_evaluation[model] = []
         else:
-            self.__models.append(model)
+            self.__models_evaluation[model] = np.nan
 
     def set_x_trainset(self, x_train):
         self.__x_train = x_train
@@ -91,26 +89,35 @@ class RegressionSelector:
         return self.__y_validation
 
     def start_evaluation(self):
-        for model in self.__models:
+        for model in self.__models_evaluation.keys():
             model.create_model()
             print(f"evaluating {type(model)} model .....")
             if isinstance(model, PolynomialRegressionModel):
-                for eva in model.evaluate_model():
-                    self.__evaluation_arr.append(eva)
+                for eva in model.evaluate_model(ModelEvaluator.adjust_r_squar_error):
+                    self.__models_evaluation[model].append(eva)
             else:
-                self.__evaluation_arr.append(model.evaluate_model())
+                self.__models_evaluation[model] = model.evaluate_model(ModelEvaluator.adjust_r_squar_error)
 
     def get_evaluation_array(self):
-        return self.__evaluation_arr
+        return self.__models_evaluation.values()
 
     def get_best_fit_model(self):
         mx_model = None
+        mx_model_type = ""
         i = 0
-        mx = (0, 0)
-        for ev in self.__evaluation_arr:
-            if ev[0] > mx[0]:
-                mx = ev
-                mx_model = self.__models[i]
+        mx = 0
+        for model in self.__models_evaluation.keys():
+            if isinstance(model, PolynomialRegressionModel):
+                val = model.get_max_evaluation()
+                if val[1] > mx:
+                    mx = val[1]
+                    mx_model = model.get_degreed_models()[val[0]]
+                    mx_model_type = model.to_string(val[0])
+            else:
+                if self.__models_evaluation[model] > mx:
+                    mx = self.__models_evaluation[model]
+                    mx_model = model
+                    mx_model_type = model.to_string()
             i += 1
-        ret_val = (mx_model, mx)
+        ret_val = (mx_model, mx, mx_model_type)
         return ret_val
