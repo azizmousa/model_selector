@@ -60,7 +60,11 @@ class RegressionSelector:
     def set_model(self, model):
         if not isinstance(model, LearningModel):
             raise TypeError("model should be type of LearningModel")
-        self.__models.append(model)
+        if isinstance(model, PolynomialRegressionModel):
+            for mdl in model.get_degreed_models():
+                self.__models.append(mdl)
+        else:
+            self.__models.append(model)
 
     def set_x_trainset(self, x_train):
         self.__x_train = x_train
@@ -91,7 +95,8 @@ class RegressionSelector:
             model.create_model()
             print(f"evaluating {type(model)} model .....")
             if isinstance(model, PolynomialRegressionModel):
-                self.__evaluation_arr.append(list(model.evaluate_model()))
+                for eva in model.evaluate_model():
+                    self.__evaluation_arr.append(eva)
             else:
                 self.__evaluation_arr.append(model.evaluate_model())
 
@@ -103,20 +108,9 @@ class RegressionSelector:
         i = 0
         mx = (0, 0)
         for ev in self.__evaluation_arr:
-            if isinstance(ev, list):
-                ev = list(ev)
-                pmx = (np.nan, np.nan)
-                for pev in ev:
-                    if pev[0] > pmx[0]:
-                        pmx = pev
-
-                if pmx[0] > mx[0]:
-                    mx = pmx
-                    mx_model = self.__models[i].get_degreed_models().values()[ev.index(mx)]
-            else:
-                if ev[0] > mx[0]:
-                    mx = ev
-                    mx_model = self.__models[i]
+            if ev[0] > mx[0]:
+                mx = ev
+                mx_model = self.__models[i]
             i += 1
         ret_val = (mx_model, mx)
         return ret_val
