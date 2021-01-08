@@ -14,7 +14,7 @@ class LearningModel:
     def create_model(self):
         pass
 
-    def evaluate_model(self):
+    def evaluate_model(self, eval_func):
         """evaluate_model method to evalutate the model with many evaluation methods.
 
         model = LearningModel()
@@ -24,20 +24,16 @@ class LearningModel:
         none.
 
         :returns
-        adj_r : double
-            decimal value represent the R^2 error of the current model
-
-        mae : double
-            decimal value represent the mean absolute error of the current model
+        evaluation : double
+            decimal value represent the eval_func return
         """
         if self._x_validation is None:
             self._x_validation = self._x_train
         if self._y_validation is None:
             self._y_validation = self._y_train
-        adj_rs = ModelEvaluator.adjust_r_squar_error(model=self._model, x_validation=self._x_validation,
-                                                     y_validation=self._y_validation)
-        mae = ModelEvaluator.get_mean_absolute_error(self._model, self._x_validation, self._y_validation)
-        return adj_rs, mae
+        evaluation = eval_func(model=self._model, x_validation=self._x_validation,
+                               y_validation=self._y_validation)
+        return evaluation
 
     def get_model(self):
         return self._model
