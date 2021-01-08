@@ -34,7 +34,7 @@ class SupportVectorRegression(LearningModel):
         self._model.fit(x_train_tmp, y_train_tmp.flatten())
         print("Support Vector Regression Model Training is Finished.>")
 
-    def evaluate_model(self):
+    def evaluate_model(self, eval_func):
         if self._x_validation is None:
             self._x_validation = self._x_train
         if self._y_validation is None:
@@ -47,7 +47,7 @@ class SupportVectorRegression(LearningModel):
         if self._y_scaler is not None:
             self._y_validation = self._y_scaler.fit_transform(y_scaled)
 
-        return super().evaluate_model()
+        return super().evaluate_model(eval_func)
 
     # get the name of the model as string
     def to_string(self):
