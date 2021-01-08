@@ -47,8 +47,8 @@ class PolynomialRegressionModel(LearningModel):
             yield eva
 
     # get the name of the model as string
-    def to_string(self):
-        return type(self._model)
+    def to_string(self, degree=1):
+        return f"polynomial regression model with degree {degree}"
 
     def get_degree_range(self):
         return self._degree_range
