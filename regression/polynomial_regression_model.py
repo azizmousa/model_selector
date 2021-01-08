@@ -64,10 +64,10 @@ class PolynomialRegressionModel(LearningModel):
         self._degree_range = degree_range.flatten()
 
     def get_max_evaluation(self):
-        mx = self._evaluation[0][0]
+        mx = self._evaluation[0][1]
         ret = self._evaluation
         for v in self._evaluation:
-            if v[0] > mx:
-                mx = v[0]
+            if v[1] > mx:
+                mx = v[1]
                 ret = v
         return ret
