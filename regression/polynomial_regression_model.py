@@ -8,6 +8,7 @@ class PolynomialRegressionModel(LearningModel):
 
     def __init__(self, x_train=None, y_train=None, x_validation=None, y_validation=None, model=None, degree_range=None):
         self._degree_range = None
+        self._evaluation = []
         self.set_degree_range(degree_range)
         self._degreed_model = {}
         self._x_validation_zero = x_validation
@@ -31,7 +32,7 @@ class PolynomialRegressionModel(LearningModel):
                 self._degreed_model[degree] = model
                 print(f"Polynomial Regression Model of Degree [{degree}] Training is Finished >>")
 
-    def evaluate_model(self):
+    def evaluate_model(self, eval_func):
         if self._x_validation_zero is None:
             self._x_validation_zero = self._x_train
         if self._y_validation_zero is None:
@@ -41,8 +42,9 @@ class PolynomialRegressionModel(LearningModel):
             poly = PolynomialFeatures(degree=degree)
             self._model = self._degreed_model[degree]
             self._x_validation = poly.fit_transform(self._x_validation_zero)
-
-            yield super().evaluate_model()
+            eva = super().evaluate_model(eval_func)
+            self._evaluation.append((degree, eva))
+            yield eva
 
     # get the name of the model as string
     def to_string(self):
@@ -60,3 +62,12 @@ class PolynomialRegressionModel(LearningModel):
         elif not isinstance(degree_range, np.ndarray):
             raise TypeError("degree_range should be 1d array")
         self._degree_range = degree_range.flatten()
+
+    def get_max_evaluation(self):
+        mx = self._evaluation[0][0]
+        ret = self._evaluation
+        for v in self._evaluation:
+            if v[0] > mx:
+                mx = v[0]
+                ret = v
+        return ret
