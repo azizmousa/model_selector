@@ -20,6 +20,6 @@ class ModelEvaluator:
         return mean_absolute_error(y_validation, y_hat)
 
     @staticmethod
-    def get_model_accuarcy(model, x_validation, y_valiation):
+    def get_model_accuarcy(model, x_validation, y_validation):
         y_hat = model.predict(x_validation)
-        accuracy_score(y_valiation, y_hat)
+        return accuracy_score(y_validation, y_hat)
