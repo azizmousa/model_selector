@@ -1,6 +1,5 @@
 import numpy as np
-from sklearn.metrics import mean_absolute_error
-
+from sklearn.metrics import mean_absolute_error, accuracy_score
 
 class ModelEvaluator:
 
@@ -19,3 +18,8 @@ class ModelEvaluator:
     def get_mean_absolute_error(model, x_validation, y_validation):
         y_hat = model.predict(x_validation)
         return mean_absolute_error(y_validation, y_hat)
+
+    @staticmethod
+    def get_model_accuarcy(model, x_validation, y_valiation):
+        y_hat = model.predict(x_validation)
+        accuracy_score(y_valiation, y_hat)
