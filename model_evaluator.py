@@ -1,5 +1,6 @@
 import numpy as np
-from sklearn.metrics import mean_absolute_error, accuracy_score
+from sklearn.metrics import mean_absolute_error, accuracy_score, f1_score
+
 
 class ModelEvaluator:
 
@@ -23,3 +24,8 @@ class ModelEvaluator:
     def get_model_accuarcy(model, x_validation, y_validation):
         y_hat = model.predict(x_validation)
         return accuracy_score(y_validation, y_hat)
+
+    @staticmethod
+    def get_f1_score(model, x_validation, y_validation):
+        y_hat = model.predict(x_validation)
+        return f1_score(y_validation, y_hat)
