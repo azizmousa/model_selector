@@ -79,11 +79,11 @@ class ClassificationSelector:
     def get_y_validationset(self):
         return self.__y_validation
 
-    def start_evaluation(self):
+    def start_evaluation(self, evaluation_function):
         for model in self.__models_evaluation.keys():
             model.create_model()
             print(f"evaluating {type(model)} model .....")
-            self.__models_evaluation[model] = model.evaluate_model(ModelEvaluator.get_model_accuarcy)
+            self.__models_evaluation[model] = model.evaluate_model(evaluation_function)
 
     def get_evaluation_array(self):
         return self.__models_evaluation.values()
