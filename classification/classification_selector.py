@@ -54,7 +54,6 @@ class ClassificationSelector:
             raise TypeError("model should be type of LearningModel")
         self.__models_evaluation[model] = -1
 
-
     def set_x_trainset(self, x_train):
         self.__x_train = x_train
 
@@ -85,8 +84,11 @@ class ClassificationSelector:
             print(f"evaluating {type(model)} model .....")
             self.__models_evaluation[model] = model.evaluate_model(evaluation_function)
 
-    def get_evaluation_array(self):
-        return self.__models_evaluation.values()
+    def get_evaluations_string(self):
+        evals = ""
+        for key in self.__models_evaluation.keys():
+            evals += str(key.to_string()) + ": " + str(self.__models_evaluation[key]) + "\n"
+        return evals
 
     def get_best_fit_model(self):
         mx_model = None
